@@ -5,6 +5,8 @@ import Level1 from './scenes/Level1';
 
 // To run server, "npm start"
 
+// https://micropi.wordpress.com/2020/05/02/making-a-top-down-game-in-phaser-3/
+
 const config = {
     width: 1280,
     height: 720,
