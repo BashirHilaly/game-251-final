@@ -1,6 +1,8 @@
 import Phaser from "phaser";
 import floorImage from '../../dist/assets/floor.svg';
 import playerImage from '../../dist/assets/temporary assets/PNG/Hitman 1/hitman1_hold.png';
+import enemy1 from '../../dist/assets/temporary assets/PNG/Zombie 1/zoimbie1_hold.png';
+
 
 class Level1 extends Phaser.Scene
 {
@@ -8,6 +10,7 @@ class Level1 extends Phaser.Scene
     player;
     obstacles;
     cursors;
+    enemies;
 
     yLimit;
     xLimit;
@@ -19,11 +22,13 @@ class Level1 extends Phaser.Scene
     {
         this.load.image('floor', floorImage);
         this.load.image('player', playerImage);
+        this.load.image('enemy1', enemy1);
 
     }
 
     create ()
     {
+
         this.cameras.main.setBounds(0, 0, this.xLimit, this.yLimit); //the camera can not go beyond the x and y bounds
 
         let background = this.add.image(0, 0, 'floor');
@@ -35,6 +40,14 @@ class Level1 extends Phaser.Scene
         this.player = this.physics.add.sprite(1280/2, 720/2, 'player');
 
         this.cursors = this.input.keyboard.createCursorKeys();
+
+        this.enemies = this.physics.add.group({
+            key: 'enemy1',
+            setXY: { x: 100, y: 100 }
+        });
+
+        this.physics.add.collider(this.enemies, this.player);
+
     }
 
     update () 
