@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import floorImage from '../../dist/assets/floor.png';
 
 class Level1 extends Phaser.Scene
 {
@@ -13,7 +14,7 @@ class Level1 extends Phaser.Scene
 
     preload () 
     {
-        this.load.image('floor', '../assets/floor.png');
+        this.load.image('floor', floorImage);
     }
 
     create ()
