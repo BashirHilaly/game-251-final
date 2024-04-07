@@ -24,4 +24,4 @@ const game = new Phaser.Game(config);
 game.scene.add('MainMenu', MainMenu);
 game.scene.add('Level1', Level1);
 
-game.scene.start('MainMenu');
+game.scene.start('Level1');
