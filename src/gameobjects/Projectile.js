@@ -5,7 +5,7 @@ class Projectile extends Phaser.Physics.Arcade.Sprite
     constructor (scene, x, y, texture)
     {
         super(scene, x, y, texture);
-
+        
     }
     
     fire (x, y, speed)
@@ -24,6 +24,7 @@ class Projectile extends Phaser.Physics.Arcade.Sprite
         console.log('Fired Shot Velocity: ', changeInX/hypotenuse,', ',changeInY/hypotenuse);
 
         this.setVelocity(speed * (changeInX/hypotenuse), speed * (changeInY/hypotenuse));
+        this.setBounce(1,1);
 
     }
 

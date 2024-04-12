@@ -19,6 +19,26 @@ class BaseLevel extends Phaser.Scene
         
     }
     
+    createBar(x, y, color){
+
+        // Drawing the bar
+        const bar = this.add.graphics();
+
+        // Add the color
+        bar.fillStyle(color, 1);
+
+        // fill bar with a rectangle
+        bar.fillRect(0, 0, 200, 50);
+
+        // Position the bar
+        bar.x = x;
+        bar.y = y;
+
+        return bar;
+    }
+    setBarValue(bar, value){
+        bar.scaleX = value/100;
+    }
 
     create ()
     {
@@ -32,9 +52,6 @@ class BaseLevel extends Phaser.Scene
         this.cameras.main.setBounds(0, 0, this.xLimit, this.yLimit); //the camera can not go beyond the x and y bounds
 
         // Define key codes
-
-        this.player = new Player(this, this.xLimit/2, this.yLimit/2, 'player');
-        this.player.create();
 
         
         function getRandomInt(min, max) {
@@ -55,8 +72,10 @@ class BaseLevel extends Phaser.Scene
         }
         this.obstacles = this.physics.add.staticGroup(generatedSquares);
 
-        this.physics.add.collider(this.player, this.obstacles);
+        this.player = new Player(this, this.xLimit/2, this.yLimit/2, 'player');
+        this.player.create();
 
+        this.physics.add.collider(this.player, this.obstacles);
 
     }
 

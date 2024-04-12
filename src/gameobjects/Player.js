@@ -1,5 +1,6 @@
 import Entity from './Entity';
 import Ammunition from './Ammunition';
+import ColorSystem from '../misc/ColorSystem';
 
 class Player extends Entity {
     constructor(scene, x, y, image) {
@@ -7,6 +8,8 @@ class Player extends Entity {
 
         this.scene = scene;
         this.image = image;
+
+        this.health;
 
         this.speed = 200;
 
@@ -24,6 +27,7 @@ class Player extends Entity {
 
     }
 
+
     create(){
         //this.cursors = this.scene.input.keyboard.createCursorKeys();
         const {LEFT,RIGHT,UP,DOWN,W,A,S,D,SHIFT} = Phaser.Input.Keyboard.KeyCodes;
@@ -39,14 +43,18 @@ class Player extends Entity {
             shift: SHIFT
         });
 
+        // Color system
+        const colors = new ColorSystem();
+
         // Weapon Initialization
         this.bullets = new Ammunition(this.scene, 10, 1000);
 
-        
+        this.scene.physics.add.collider(this.bullets, this.scene.obstacles);
 
         this.scene.input.on('pointerdown', (pointer) => {
             this.bullets.fireShot(this.x, this.y);
         });
+
     }
     
     update(){
@@ -97,8 +105,6 @@ class Player extends Entity {
             }
             console.log('Stamina Regeneration: ', this.staminaRegen,'/',this.staminaRegenTime);
         }
-
-
 
 
         if (this.keys.left.isDown || this.keys.a.isDown && this.x >= 0){
