@@ -1,3 +1,3 @@
 <p align="center">بسم الله الرحمن الرحيم
-<br>_In the name of Allah, Most Gracious, Most Merciful_
+<br>In the name of Allah, Most Gracious, Most Merciful
 </p>
