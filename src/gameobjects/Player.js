@@ -17,7 +17,8 @@ class Player extends Entity {
 
     create(){
         //this.cursors = this.scene.input.keyboard.createCursorKeys();
-        const {LEFT,RIGHT,UP,DOWN,W,A,S,D} = Phaser.Input.Keyboard.KeyCodes;
+        console.log(Phaser.Input.Keyboard.KeyCodes);
+        const {LEFT,RIGHT,UP,DOWN,W,A,S,D,SHIFT} = Phaser.Input.Keyboard.KeyCodes;
         this.keys = this.scene.input.keyboard.addKeys({
             left: LEFT,
             right: RIGHT,
@@ -26,7 +27,8 @@ class Player extends Entity {
             w: W,
             a: A,
             s: S,
-            d: D
+            d: D,
+            shift: SHIFT
         });
 
     }
@@ -45,6 +47,12 @@ class Player extends Entity {
         this.angle = Math.atan2(changeInY,changeInX) * (180/Math.PI); // convert the radians to degrees
 
         //console.log('Player angle: ', this.player.angle);
+        
+        // Sprinting mechanic
+        this.speed = 200; // Normal speed
+        if (this.keys.shift.isDown){
+            this.speed = this.speed + this.speed/2;
+        }
 
 
         if (this.keys.left.isDown || this.keys.a.isDown && this.x >= 0){
