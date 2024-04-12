@@ -8,16 +8,21 @@ class Player extends Entity {
         this.image = image;
 
         this.speed = 200;
+
+        this.isSprinting = false;
+        this.canSprint = true;
+        this.stamina = 400;
+        this.sprintTime = 0;
+        this.staminaRegen = 0;
+        this.staminaRegenTime = 600;
     }
 
     preload(){
 
     }
 
-
     create(){
         //this.cursors = this.scene.input.keyboard.createCursorKeys();
-        console.log(Phaser.Input.Keyboard.KeyCodes);
         const {LEFT,RIGHT,UP,DOWN,W,A,S,D,SHIFT} = Phaser.Input.Keyboard.KeyCodes;
         this.keys = this.scene.input.keyboard.addKeys({
             left: LEFT,
@@ -30,7 +35,6 @@ class Player extends Entity {
             d: D,
             shift: SHIFT
         });
-
     }
     
     update(){
@@ -50,9 +54,39 @@ class Player extends Entity {
         
         // Sprinting mechanic
         this.speed = 200; // Normal speed
-        if (this.keys.shift.isDown){
-            this.speed = this.speed + this.speed/2;
+        if (this.canSprint)
+        {
+            if (this.sprintTime > this.stamina)
+            {
+                this.canSprint = false;
+            }
+            if (!this.keys.shift.isDown || this.sprintTime > this.stamina){
+                this.isSprinting = false;
+            }
+            else if (this.keys.shift.isDown && this.sprintTime < this.stamina){
+                this.isSprinting = true;
+            }
+    
+            if (this.isSprinting && this.canSprint)
+            {
+                this.speed = this.speed + this.speed/2;
+                this.sprintTime += 1;
+                console.log('Sprint Time: ', this.sprintTime);
+            }
         }
+        else {
+            this.speed = 200;
+            // Regenerate stamina
+            this.staminaRegen += 1;
+            if (this.staminaRegen == this.staminaRegenTime){
+                this.staminaRegen = 0;
+                this.canSprint = true;
+                this.sprintTime = 0;
+            }
+            console.log('Stamina Regeneration: ', this.staminaRegen,'/',this.staminaRegenTime);
+        }
+
+
 
 
         if (this.keys.left.isDown || this.keys.a.isDown && this.x >= 0){
