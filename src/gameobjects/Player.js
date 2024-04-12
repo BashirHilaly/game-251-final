@@ -1,4 +1,5 @@
 import Entity from './Entity';
+import Ammunition from './Ammunition';
 
 class Player extends Entity {
     constructor(scene, x, y, image) {
@@ -15,6 +16,8 @@ class Player extends Entity {
         this.sprintTime = 0;
         this.staminaRegen = 0;
         this.staminaRegenTime = 600;
+
+        this.bullets;
     }
 
     preload(){
@@ -34,6 +37,13 @@ class Player extends Entity {
             s: S,
             d: D,
             shift: SHIFT
+        });
+
+        // Weapon Initialization
+        this.bullets = new Ammunition(this.scene, 10);
+
+        this.scene.input.on('pointerdown', (pointer) => {
+            this.bullets.fireShot(this.x, this.y);
         });
     }
     
@@ -69,7 +79,7 @@ class Player extends Entity {
     
             if (this.isSprinting && this.canSprint)
             {
-                this.speed = this.speed + this.speed/2;
+                this.speed = this.speed + this.speed;
                 this.sprintTime += 1;
                 console.log('Sprint Time: ', this.sprintTime);
             }

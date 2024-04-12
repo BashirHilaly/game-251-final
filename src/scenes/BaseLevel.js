@@ -54,6 +54,7 @@ class BaseLevel extends Phaser.Scene
 
         this.physics.add.collider(this.player, this.obstacles);
 
+
     }
 
     update ()
