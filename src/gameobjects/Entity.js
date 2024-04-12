@@ -10,6 +10,9 @@ class Entity extends Phaser.GameObjects.Sprite {
         this.scene.physics.world.enableBody(this, 0);
         this.type = type;
         this.isDead = false;
+
+        this.displayWidth = 80;
+        this.displayHeight = 80;
     }
 
     explode() {

@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import Player from "../gameobjects/Player.js";
-import playerImage from '../../dist/assets/temporary assets/PNG/Hitman 1/hitman1_hold.png';
+import playerImage from '../../dist/assets/player.png';
 import floorImage from '../../dist/assets/floor.svg';
 
 
