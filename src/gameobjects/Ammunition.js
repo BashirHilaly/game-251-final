@@ -3,7 +3,7 @@ import Projectile from "./Projectile";
 
 class Ammunition extends Phaser.Physics.Arcade.Group
 {
-    constructor (scene, clips)
+    constructor (scene, clips, shotSpeed)
     {
         super (scene.physics.world, scene);
 
@@ -14,6 +14,9 @@ class Ammunition extends Phaser.Physics.Arcade.Group
             visible: false,
             classType: Projectile
         });
+
+        this.speed = shotSpeed;
+
     }
 
     fireShot (x, y)
@@ -22,7 +25,7 @@ class Ammunition extends Phaser.Physics.Arcade.Group
 
         if (shot)
         {
-            shot.fire(x, y);
+            shot.fire(x, y, this.speed);
         }
     }
 }

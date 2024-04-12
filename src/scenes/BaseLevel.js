@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import Player from "../gameobjects/Player.js";
 import playerImage from '../../dist/assets/player.png';
 import floorImage from '../../dist/assets/floor.svg';
+import ColorSystem from "../misc/ColorSystem.js";
 
 
 
@@ -42,13 +43,15 @@ class BaseLevel extends Phaser.Scene
             return Math.floor(Math.random() * (max - min + 1)) + min;
         };
 
+        // Get colors
+        const colors = new ColorSystem();
 
         // Generate obstacles
         const generatedSquares = [];
         const amountOfObstacles = 40;
         for (let i = 0; i < amountOfObstacles; i++)
         {
-            generatedSquares.push(this.add.rectangle(getRandomInt(0, this.xLimit), getRandomInt(0, this.yLimit), getRandomInt(30, 200), getRandomInt(10, 200), 3552822));
+            generatedSquares.push(this.add.rectangle(getRandomInt(0, this.xLimit), getRandomInt(0, this.yLimit), getRandomInt(30, 200), getRandomInt(10, 200), colors.darkGray));
         }
         this.obstacles = this.physics.add.staticGroup(generatedSquares);
 

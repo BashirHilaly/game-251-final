@@ -40,7 +40,9 @@ class Player extends Entity {
         });
 
         // Weapon Initialization
-        this.bullets = new Ammunition(this.scene, 10);
+        this.bullets = new Ammunition(this.scene, 10, 1000);
+
+        
 
         this.scene.input.on('pointerdown', (pointer) => {
             this.bullets.fireShot(this.x, this.y);
