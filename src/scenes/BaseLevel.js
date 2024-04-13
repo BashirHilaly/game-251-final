@@ -77,6 +77,13 @@ class BaseLevel extends Phaser.Scene
 
         this.physics.add.collider(this.player, this.obstacles);
 
+
+
+        // this.physics.world.on('collide', (body1, body2) =>
+        // {
+        //     console.log('Collide');
+        // });
+
     }
 
     update ()

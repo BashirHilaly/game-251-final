@@ -5,10 +5,11 @@ class Projectile extends Phaser.Physics.Arcade.Sprite
     constructor (scene, x, y, texture)
     {
         super(scene, x, y, texture);
+
         
     }
     
-    fire (x, y, speed)
+    fire (x, y, speed, maxBounces)
     {
         this.body.reset(x, y);
 
@@ -26,10 +27,25 @@ class Projectile extends Phaser.Physics.Arcade.Sprite
         this.setVelocity(speed * (changeInX/hypotenuse), speed * (changeInY/hypotenuse));
         this.setBounce(1,1);
 
+        var bounces = 0
+
+        this.scene.physics.add.collider(this, this.scene.obstacles, _ => {
+            if (bounces >= maxBounces)
+            {
+                this.destroyBullet();
+            }
+            else{
+                bounces += 1;
+                console.log('Bounces: ', bounces);
+            }
+            //console.log('test');
+        });
+
     }
 
-    destroy ()
+    destroyBullet ()
     {
+        console.log('Destroying bullet');
         this.destroy();
     }
 

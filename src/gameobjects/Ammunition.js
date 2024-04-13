@@ -17,15 +17,17 @@ class Ammunition extends Phaser.Physics.Arcade.Group
 
         this.speed = shotSpeed;
 
+        this.shot;
+
     }
 
-    fireShot (x, y)
+    fireShot (x, y, maxBounces)
     {
-        const shot = this.getFirstDead(false);
+        this.shot = this.getFirstDead(false);
 
-        if (shot)
+        if (this.shot)
         {
-            shot.fire(x, y, this.speed);
+            this.shot.fire(x, y, this.speed, maxBounces);
         }
     }
 }

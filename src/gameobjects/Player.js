@@ -1,6 +1,6 @@
 import Entity from './Entity';
-import Ammunition from './Ammunition';
 import ColorSystem from '../misc/ColorSystem';
+import Ammunition from './Ammunition';
 
 class Player extends Entity {
     constructor(scene, x, y, image) {
@@ -21,6 +21,7 @@ class Player extends Entity {
         this.staminaRegenTime = 600;
 
         this.bullets;
+
     }
 
     preload(){
@@ -43,16 +44,16 @@ class Player extends Entity {
             shift: SHIFT
         });
 
+        this.body.onCollide = true;
+
         // Color system
         const colors = new ColorSystem();
 
         // Weapon Initialization
         this.bullets = new Ammunition(this.scene, 10, 1000);
 
-        this.scene.physics.add.collider(this.bullets, this.scene.obstacles);
-
         this.scene.input.on('pointerdown', (pointer) => {
-            this.bullets.fireShot(this.x, this.y);
+            this.bullets.fireShot(this.x, this.y, 1);
         });
 
     }
@@ -129,6 +130,7 @@ class Player extends Entity {
         else {
             this.body.setVelocityY(0);
         }
+
 
     }
 }
