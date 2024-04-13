@@ -3,7 +3,7 @@ import Player from "../gameobjects/Player.js";
 import playerImage from '../../dist/assets/player.png';
 import floorImage from '../../dist/assets/floor.svg';
 import ColorSystem from "../misc/ColorSystem.js";
-
+import Enemy from "../gameobjects/Enemy.js";
 
 
 class BaseLevel extends Phaser.Scene
@@ -11,6 +11,9 @@ class BaseLevel extends Phaser.Scene
 
     player;
     obstacles;
+
+    enemies;
+    enemy;
 
     preload ()
     {
@@ -77,7 +80,11 @@ class BaseLevel extends Phaser.Scene
 
         this.physics.add.collider(this.player, this.obstacles);
 
+        // Generate enemies
+        this.enemy = new Enemy(this, getRandomInt(0, this.xLimit), getRandomInt(0, this.yLimit), 'image');
+        this.enemy.create();
 
+        this.physics.add.collider(this.enemy, this.obstacles);
 
         // this.physics.world.on('collide', (body1, body2) =>
         // {
@@ -90,6 +97,8 @@ class BaseLevel extends Phaser.Scene
     {
         this.cameras.main.centerOn(this.player.x, this.player.y); //centre camera on current position of player
         this.player.update();
+
+        this.enemy.update();
     }
 }
 

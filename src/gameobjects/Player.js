@@ -28,7 +28,6 @@ class Player extends Entity {
 
     }
 
-
     create(){
         //this.cursors = this.scene.input.keyboard.createCursorKeys();
         const {LEFT,RIGHT,UP,DOWN,W,A,S,D,SHIFT} = Phaser.Input.Keyboard.KeyCodes;
