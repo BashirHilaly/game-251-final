@@ -8,6 +8,10 @@
 
 ### TO DO:
 Add reloading
+
 Add game timer
+
 Add Images for enemies, bullets, etc
+
 Add sounds
+
