@@ -41,6 +41,10 @@ class Projectile extends Phaser.Physics.Arcade.Sprite
             //console.log('test');
         });
 
+        this.scene.physics.add.collider(this, this.scene.enemies, _ => {
+            this.destroyBullet();
+        })
+
     }
 
     destroyBullet ()

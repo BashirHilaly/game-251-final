@@ -26,7 +26,7 @@ class Enemy extends Entity {
 
         this.setActive(true);
 
-        console.log('Enemy Created');
+        //console.log('Enemy Created');
 
         this.body.onCollide = true;
 
@@ -35,7 +35,11 @@ class Enemy extends Entity {
         });
 
         // Take Damage
-        
+        this.scene.physics.add.collider(this, this.scene.player.bullets.getChildren(), _ => {
+            console.log('Enemy Hit');
+            this.health -= this.scene.player.bullets.damage;
+        })
+
 
     }
 
@@ -50,6 +54,12 @@ class Enemy extends Entity {
         let hypotenuse = Math.sqrt(changeInX**2 + changeInY**2);
 
         this.body.setVelocity(this.speed * (changeInX/hypotenuse), this.speed * (changeInY/hypotenuse));
+
+        if (this.health <= 0)
+        {
+            console.log('Enemy killed');
+            this.destroy();
+        }
 
     }
 }
