@@ -22,6 +22,8 @@ class Player extends Entity {
 
         this.bullets;
 
+        this.enemiesKilled = 0;
+
     }
 
     preload(){
@@ -45,6 +47,8 @@ class Player extends Entity {
 
         this.body.onCollide = true;
 
+        this.scene.physics.add.collider(this, this.scene.obstacles);
+
         // Color system
         const colors = new ColorSystem();
 
@@ -52,7 +56,7 @@ class Player extends Entity {
         this.bullets = new Ammunition(this.scene, 10, 1000);
 
         this.scene.input.on('pointerdown', (pointer) => {
-            this.bullets.fireShot(this.x, this.y, 1);
+            this.bullets.fireShot(this.x, this.y, 0);
         });
 
     }
@@ -91,7 +95,7 @@ class Player extends Entity {
             {
                 this.speed = this.speed + this.speed;
                 this.sprintTime += 1;
-                console.log('Sprint Time: ', this.sprintTime);
+                //console.log('Sprint Time: ', this.sprintTime);
             }
         }
         else {
@@ -103,7 +107,7 @@ class Player extends Entity {
                 this.canSprint = true;
                 this.sprintTime = 0;
             }
-            console.log('Stamina Regeneration: ', this.staminaRegen,'/',this.staminaRegenTime);
+            //console.log('Stamina Regeneration: ', this.staminaRegen,'/',this.staminaRegenTime);
         }
 
 

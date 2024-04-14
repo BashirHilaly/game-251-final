@@ -12,7 +12,9 @@ class BaseLevel extends Phaser.Scene
     player;
     obstacles;
 
+    group;
     enemies;
+    amountOfEnemies = 10;
     enemy;
 
     preload ()
@@ -78,13 +80,26 @@ class BaseLevel extends Phaser.Scene
         this.player = new Player(this, this.xLimit/2, this.yLimit/2, 'player');
         this.player.create();
 
-        this.physics.add.collider(this.player, this.obstacles);
+        //this.physics.add.collider(this.player, this.obstacles);
 
         // Generate enemies
-        this.enemy = new Enemy(this, getRandomInt(0, this.xLimit), getRandomInt(0, this.yLimit), 'image');
-        this.enemy.create();
+        this.group = this.add.group();
+        this.group.createMultiple({
+            frameQuantity: this.amountOfEnemies,
+            key: 'enemy',
+            active: true,
+            visible: true,
+            classType: Enemy
+        });
+        this.enemies = this.group.getChildren();
+        for (let i = 0; i < this.enemies.length; i++)
+        {
+            this.enemies[i].create();
+        }
 
-        this.physics.add.collider(this.enemy, this.obstacles);
+        
+
+        //this.physics.add.collider(this.enemy, this.obstacles);
 
         // this.physics.world.on('collide', (body1, body2) =>
         // {
@@ -98,7 +113,11 @@ class BaseLevel extends Phaser.Scene
         this.cameras.main.centerOn(this.player.x, this.player.y); //centre camera on current position of player
         this.player.update();
 
-        this.enemy.update();
+        for (let i = 0; i < this.enemies.length; i++)
+        {
+            this.enemies[i].update();
+        }
+
     }
 }
 

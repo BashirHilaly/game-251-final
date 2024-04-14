@@ -8,12 +8,34 @@ class Enemy extends Entity {
         this.image = image;
 
         this.speed = 120;
+        this.health = 100;
 
     }
 
     create ()
     {
+
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        };
+
+        this.x = getRandomInt(0, this.scene.xLimit);
+        this.y = getRandomInt(0, this.scene.yLimit);
+
+        this.setActive(true);
+
+        console.log('Enemy Created');
+
         this.body.onCollide = true;
+
+        this.scene.physics.add.collider(this, this.scene.obstacles, _ => {
+            //console.log('test');
+        });
+
+        // Take Damage
+        
 
     }
 

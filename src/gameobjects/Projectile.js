@@ -27,7 +27,7 @@ class Projectile extends Phaser.Physics.Arcade.Sprite
         this.setVelocity(speed * (changeInX/hypotenuse), speed * (changeInY/hypotenuse));
         this.setBounce(1,1);
 
-        var bounces = 0
+        var bounces = 0;
 
         this.scene.physics.add.collider(this, this.scene.obstacles, _ => {
             if (bounces >= maxBounces)
@@ -36,7 +36,7 @@ class Projectile extends Phaser.Physics.Arcade.Sprite
             }
             else{
                 bounces += 1;
-                console.log('Bounces: ', bounces);
+                //console.log('Bounces: ', bounces);
             }
             //console.log('test');
         });
