@@ -7,7 +7,7 @@
 # GAME 251 Final Project
 
 ### TO DO:
-Add reloading
+Add reloading wait time
 
 Add game timer
 
