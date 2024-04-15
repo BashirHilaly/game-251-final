@@ -21,6 +21,8 @@ class Player extends Entity {
         this.staminaRegenTime = 600;
 
         this.bullets;
+        this.clips = 10;
+        this.clipsRemaining = this.clips;
 
         this.enemiesKilled = 0;
 
@@ -30,9 +32,26 @@ class Player extends Entity {
 
     }
 
+    createNewClip()
+    {
+        this.bullets = new Ammunition(this.scene, 10, 1000, 30);
+    }
+    reload(){
+        // Throw out old clip
+        this.bullets.destroy();
+        this.bullets = null;
+        this.clipsRemaining -= 1;
+        // Check if we have any more clips remaining then create new clip to reload
+        if (this.clipsRemaining > 0){
+            console.log("Reloading");
+            // ADD WAIT TIME
+            this.createNewClip();
+        }
+    }
+
     create(){
         //this.cursors = this.scene.input.keyboard.createCursorKeys();
-        const {LEFT,RIGHT,UP,DOWN,W,A,S,D,SHIFT} = Phaser.Input.Keyboard.KeyCodes;
+        const {LEFT,RIGHT,UP,DOWN,W,A,S,D,SHIFT,R} = Phaser.Input.Keyboard.KeyCodes;
         this.keys = this.scene.input.keyboard.addKeys({
             left: LEFT,
             right: RIGHT,
@@ -42,8 +61,11 @@ class Player extends Entity {
             a: A,
             s: S,
             d: D,
-            shift: SHIFT
+            shift: SHIFT,
+            r: R
         });
+
+        console.log(this.keys);
 
         this.body.onCollide = true;
 
@@ -54,11 +76,17 @@ class Player extends Entity {
         const colors = new ColorSystem();
 
         // Weapon Initialization
-        this.bullets = new Ammunition(this.scene, 10, 1000, 10);
+        this.createNewClip();
 
         this.scene.input.on('pointerdown', (pointer) => {
-            this.bullets.fireShot(this.x, this.y, 0);
+            if (this.bullets && this.bullets.bulletsRemaining > 0){
+                this.bullets.fireShot(this.x, this.y, 0);
+            }
+            else {
+                console.log('No ammo');
+            }
         });
+
 
     }
     
@@ -94,7 +122,7 @@ class Player extends Entity {
     
             if (this.isSprinting && this.canSprint)
             {
-                this.speed = this.speed + this.speed;
+                this.speed = this.speed + this.speed/1.5;
                 this.sprintTime += 1;
                 //console.log('Sprint Time: ', this.sprintTime);
             }
@@ -111,7 +139,7 @@ class Player extends Entity {
             //console.log('Stamina Regeneration: ', this.staminaRegen,'/',this.staminaRegenTime);
         }
 
-
+        // Movement
         if (this.keys.left.isDown || this.keys.a.isDown && this.x >= 0){
             this.body.setVelocityX(-this.speed);
             //console.log('Left key pressed');
@@ -133,6 +161,12 @@ class Player extends Entity {
         }
         else {
             this.body.setVelocityY(0);
+        }
+
+        // Reloading
+        if (this.bullets && this.bullets.bulletsRemaining != this.bullets.ammo && this.keys.r._justUp){
+            this.keys.r._justUp = false;
+            this.reload();
         }
 
 

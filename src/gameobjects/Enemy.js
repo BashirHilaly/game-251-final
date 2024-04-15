@@ -34,11 +34,7 @@ class Enemy extends Entity {
             //console.log('test');
         });
 
-        // Take Damage
-        // this.scene.physics.add.collider(this, this.scene.player.bullets.getChildren(), _ => {
-        //     //console.log('Enemy Hit');
-        //     this.health -= this.scene.player.bullets.damage;
-        // })
+        this.scene.physics.add.collider(this, this.scene.group);
 
 
     }

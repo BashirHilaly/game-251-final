@@ -30,9 +30,9 @@ class Projectile extends Phaser.Physics.Arcade.Sprite
 
         var bounces = 0;
 
-        console.log(this.scene.enemies);
+        // Hit enemy and do damage
         this.scene.physics.add.collider(this, this.scene.enemies, (bullet, enemy) => {
-            console.log('Enemy: ', enemy, 'Hit by: ', bullet);
+            //console.log('Enemy: ', enemy, 'Hit by: ', bullet);
             enemy.health -= damage;
             this.destroyBullet();
         });
@@ -54,7 +54,7 @@ class Projectile extends Phaser.Physics.Arcade.Sprite
 
     destroyBullet ()
     {
-        console.log('Destroying bullet');
+        //console.log('Destroying bullet');
         this.destroy();
     }
 
