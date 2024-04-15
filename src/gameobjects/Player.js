@@ -48,6 +48,7 @@ class Player extends Entity {
         this.body.onCollide = true;
 
         this.scene.physics.add.collider(this, this.scene.obstacles);
+        this.scene.physics.add.collider(this, this.scene.enemies);
 
         // Color system
         const colors = new ColorSystem();

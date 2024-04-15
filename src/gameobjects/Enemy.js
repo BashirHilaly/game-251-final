@@ -35,12 +35,18 @@ class Enemy extends Entity {
         });
 
         // Take Damage
-        this.scene.physics.add.collider(this, this.scene.player.bullets.getChildren(), _ => {
-            console.log('Enemy Hit');
-            this.health -= this.scene.player.bullets.damage;
-        })
+        // this.scene.physics.add.collider(this, this.scene.player.bullets.getChildren(), _ => {
+        //     //console.log('Enemy Hit');
+        //     this.health -= this.scene.player.bullets.damage;
+        // })
 
 
+    }
+
+    destroyEnemy() {
+        console.log('Enemy killed');
+        this.scene.player.enemiesKilled += 1;
+        this.destroy();
     }
 
     update ()
@@ -57,8 +63,7 @@ class Enemy extends Entity {
 
         if (this.health <= 0)
         {
-            console.log('Enemy killed');
-            this.destroy();
+            this.destroyEnemy();
         }
 
     }

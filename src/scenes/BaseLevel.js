@@ -15,7 +15,6 @@ class BaseLevel extends Phaser.Scene
     group;
     enemies;
     amountOfEnemies = 10;
-    enemy;
 
     preload ()
     {
@@ -77,11 +76,6 @@ class BaseLevel extends Phaser.Scene
         }
         this.obstacles = this.physics.add.staticGroup(generatedSquares);
 
-        this.player = new Player(this, this.xLimit/2, this.yLimit/2, 'player');
-        this.player.create();
-
-        //this.physics.add.collider(this.player, this.obstacles);
-
         // Generate enemies
         this.group = this.add.group();
         this.group.createMultiple({
@@ -92,19 +86,16 @@ class BaseLevel extends Phaser.Scene
             classType: Enemy
         });
         this.enemies = this.group.getChildren();
+
+        this.player = new Player(this, this.xLimit/2, this.yLimit/2, 'player');
+        this.player.create();
+
         for (let i = 0; i < this.enemies.length; i++)
         {
             this.enemies[i].create();
         }
 
         
-
-        //this.physics.add.collider(this.enemy, this.obstacles);
-
-        // this.physics.world.on('collide', (body1, body2) =>
-        // {
-        //     console.log('Collide');
-        // });
 
     }
 

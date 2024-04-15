@@ -6,10 +6,11 @@ class Projectile extends Phaser.Physics.Arcade.Sprite
     {
         super(scene, x, y, texture);
 
+        this.onCollide = true;
         
     }
     
-    fire (x, y, speed, maxBounces)
+    fire (x, y, speed, maxBounces, damage)
     {
         this.body.reset(x, y);
 
@@ -22,12 +23,19 @@ class Projectile extends Phaser.Physics.Arcade.Sprite
 
         let hypotenuse = Math.sqrt(changeInX**2 + changeInY**2);
 
-        console.log('Fired Shot Velocity: ', changeInX/hypotenuse,', ',changeInY/hypotenuse);
+        // console.log('Fired Shot Velocity: ', changeInX/hypotenuse,', ',changeInY/hypotenuse);
 
         this.setVelocity(speed * (changeInX/hypotenuse), speed * (changeInY/hypotenuse));
         this.setBounce(1,1);
 
         var bounces = 0;
+
+        console.log(this.scene.enemies);
+        this.scene.physics.add.collider(this, this.scene.enemies, (bullet, enemy) => {
+            console.log('Enemy: ', enemy, 'Hit by: ', bullet);
+            enemy.health -= damage;
+            this.destroyBullet();
+        });
 
         this.scene.physics.add.collider(this, this.scene.obstacles, _ => {
             if (bounces >= maxBounces)
@@ -41,9 +49,6 @@ class Projectile extends Phaser.Physics.Arcade.Sprite
             //console.log('test');
         });
 
-        this.scene.physics.add.collider(this, this.scene.enemies, _ => {
-            this.destroyBullet();
-        })
 
     }
 
