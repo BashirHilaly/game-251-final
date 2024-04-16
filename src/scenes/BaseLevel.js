@@ -51,6 +51,9 @@ class BaseLevel extends Phaser.Scene
 
     create ()
     {
+        // Add a vignette
+        this.cameras.main.postFX.addVignette(0.5, 0.5, 0.8);
+
         // UI Scene
         this.scene.launch('UIScene');
 
