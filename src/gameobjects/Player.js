@@ -9,7 +9,7 @@ class Player extends Entity {
         this.scene = scene;
         this.image = image;
 
-        this.health;
+        this.health = 100;
 
         this.speed = 200;
 
@@ -23,7 +23,7 @@ class Player extends Entity {
         this.bullets;
         this.clips = 10;
         this.clipsRemaining = this.clips;
-        this.reloadTime = 3000;
+        this.reloadTime = 1000;
 
         this.enemiesKilled = 0;
 
@@ -40,14 +40,11 @@ class Player extends Entity {
     
     reload(_this){
         // Throw out old clip
-        console.log(_this.bullets);
         _this.bullets.destroy();
         _this.bullets = null;
         _this.clipsRemaining -= 1;
         // Check if we have any more clips remaining then create new clip to reload
         if (_this.clipsRemaining > 0){
-            console.log("Reloading");
-            // ADD WAIT TIME
             _this.createNewClip();
         }
     }
@@ -69,7 +66,6 @@ class Player extends Entity {
             r: R
         });
 
-        console.log(this.keys);
 
         this.body.onCollide = true;
 
@@ -170,6 +166,7 @@ class Player extends Entity {
         // Reloading
         if (this.bullets && this.bullets.bulletsRemaining != this.bullets.ammo && this.keys.r._justUp){
             this.keys.r._justUp = false;
+            console.log("Reloading...");
             setTimeout(() => { this.reload(this); }, this.reloadTime);
         }
 

@@ -7,7 +7,9 @@
 # GAME 251 Final Project
 
 ### TO DO:
-Add reloading wait time
+Plaayer health (make enemys attack player)
+
+Create UI
 
 Add game timer
 
