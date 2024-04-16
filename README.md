@@ -7,8 +7,6 @@
 # GAME 251 Final Project
 
 ### TO DO:
-Plaayer health (make enemys attack player)
-
 Create UI
 
 Add game timer
