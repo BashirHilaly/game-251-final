@@ -15,6 +15,7 @@ class BaseLevel extends Phaser.Scene
     group;
     enemies;
     amountOfEnemies = 10;
+    gameOver = false;
 
     preload ()
     {
@@ -90,12 +91,15 @@ class BaseLevel extends Phaser.Scene
         this.player = new Player(this, this.xLimit/2, this.yLimit/2, 'player');
         this.player.create();
 
+
+        // This contains enemy configuration
         for (let i = 0; i < this.enemies.length; i++)
         {
             this.enemies[i].create();
+            // Configuration
+            this.enemies[i].speed = 100;
+            this.enemies[i].damage = 10;
         }
-
-        
 
     }
 

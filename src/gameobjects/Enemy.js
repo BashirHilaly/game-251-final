@@ -1,13 +1,14 @@
 import Entity from './Entity';
 
 class Enemy extends Entity {
-    constructor(scene, x, y, image) {
+    constructor(scene, x, y, image, speed, damage) {
         super(scene, x, y, image, 'Enemy');
 
         this.scene = scene;
         this.image = image;
 
-        this.speed = 120;
+        this.speed = speed;
+        this.damage = damage;
         this.health = 100;
 
     }
@@ -34,14 +35,15 @@ class Enemy extends Entity {
             //console.log('test');
         });
 
+        // Collide with other enemies
         this.scene.physics.add.collider(this, this.scene.group);
 
 
     }
 
     destroyEnemy() {
-        console.log('Enemy killed');
         this.scene.player.enemiesKilled += 1;
+        console.log('Enemy killed: ', this.scene.player.enemiesKilled, ' out of ', this.scene.amountOfEnemies);
         this.destroy();
     }
 

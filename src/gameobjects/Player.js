@@ -49,6 +49,20 @@ class Player extends Entity {
         }
     }
 
+    takeDamage(damage){
+        this.health -= damage;
+        console.log('Player Health: ', this.health);
+        if (this.health <= 0){
+            this.killPlayer();
+        }
+    }
+
+    killPlayer(){
+        console.log('You Died!');
+        this.scene.gameOver = true;
+        this.scene.physics.pause();
+        this.scene.add.text(this.x, this.y, 'GAME OVER').setOrigin(0.5, 0.5).setFontSize(64);
+    }
 
     create(){
         //this.cursors = this.scene.input.keyboard.createCursorKeys();
@@ -70,7 +84,10 @@ class Player extends Entity {
         this.body.onCollide = true;
 
         this.scene.physics.add.collider(this, this.scene.obstacles);
-        this.scene.physics.add.collider(this, this.scene.enemies);
+        this.scene.physics.add.collider(this, this.scene.enemies, (player, enemy) => {
+            const damageTaken = enemy.damage / 75; // Adjust the divisor number so the damage is not too much
+            this.takeDamage(damageTaken);
+        });
 
         // Color system
         const colors = new ColorSystem();
@@ -92,84 +109,86 @@ class Player extends Entity {
     
     update(){
         
-        //This function is for rotation of the character to where the mouse position
-        // Explanation: rotation in degrees can be found by finding the change in x and y between the mouse coordinates and the player coordinates (relative to camera)
-        // therefore our angle is as follows: arctan(change in y / change in x)
+        if (!this.scene.gameOver){
+            //This function is for rotation of the character to where the mouse position
+            // Explanation: rotation in degrees can be found by finding the change in x and y between the mouse coordinates and the player coordinates (relative to camera)
+            // therefore our angle is as follows: arctan(change in y / change in x)
 
-        let changeInY = this.scene.input.mousePointer.y - (this.y - this.scene.cameras.main.worldView.y);
-        let changeInX = this.scene.input.mousePointer.x - (this.x - this.scene.cameras.main.worldView.x);
+            let changeInY = this.scene.input.mousePointer.y - (this.y - this.scene.cameras.main.worldView.y);
+            let changeInX = this.scene.input.mousePointer.x - (this.x - this.scene.cameras.main.worldView.x);
 
-        //console.log('Change in coordinates: (', changeInX, ',', changeInY, ')');
+            //console.log('Change in coordinates: (', changeInX, ',', changeInY, ')');
 
-        this.angle = Math.atan2(changeInY,changeInX) * (180/Math.PI); // convert the radians to degrees
+            this.angle = Math.atan2(changeInY,changeInX) * (180/Math.PI); // convert the radians to degrees
 
-        //console.log('Player angle: ', this.player.angle);
+            //console.log('Player angle: ', this.player.angle);
+            
+            // Sprinting mechanic
+            this.speed = 200; // Normal speed
+            if (this.canSprint)
+            {
+                if (this.sprintTime > this.stamina)
+                {
+                    this.canSprint = false;
+                }
+                if (!this.keys.shift.isDown || this.sprintTime > this.stamina){
+                    this.isSprinting = false;
+                }
+                else if (this.keys.shift.isDown && this.sprintTime < this.stamina){
+                    this.isSprinting = true;
+                }
         
-        // Sprinting mechanic
-        this.speed = 200; // Normal speed
-        if (this.canSprint)
-        {
-            if (this.sprintTime > this.stamina)
+                if (this.isSprinting && this.canSprint)
+                {
+                    this.speed = this.speed + this.speed/1.5;
+                    this.sprintTime += 1;
+                    //console.log('Sprint Time: ', this.sprintTime);
+                }
+            }
+            else {
+                this.speed = 200;
+                // Regenerate stamina
+                this.staminaRegen += 1;
+                if (this.staminaRegen == this.staminaRegenTime){
+                    this.staminaRegen = 0;
+                    this.canSprint = true;
+                    this.sprintTime = 0;
+                }
+                //console.log('Stamina Regeneration: ', this.staminaRegen,'/',this.staminaRegenTime);
+            }
+
+            // Movement
+            if (this.keys.left.isDown || this.keys.a.isDown && this.x >= 0){
+                this.body.setVelocityX(-this.speed);
+                //console.log('Left key pressed');
+            }
+            else if (this.keys.right.isDown || this.keys.d.isDown && this.x <= this.scene.xLimit)
             {
-                this.canSprint = false;
+                this.body.setVelocityX(this.speed);
             }
-            if (!this.keys.shift.isDown || this.sprintTime > this.stamina){
-                this.isSprinting = false;
+            else {
+                this.body.setVelocityX(0);
             }
-            else if (this.keys.shift.isDown && this.sprintTime < this.stamina){
-                this.isSprinting = true;
+
+            if (this.keys.up.isDown || this.keys.w.isDown && this.y >= 0){
+                this.body.setVelocityY(-this.speed);
             }
-    
-            if (this.isSprinting && this.canSprint)
+            else if (this.keys.down.isDown || this.keys.s.isDown && this.y <= this.scene.yLimit)
             {
-                this.speed = this.speed + this.speed/1.5;
-                this.sprintTime += 1;
-                //console.log('Sprint Time: ', this.sprintTime);
+                this.body.setVelocityY(this.speed);
             }
-        }
-        else {
-            this.speed = 200;
-            // Regenerate stamina
-            this.staminaRegen += 1;
-            if (this.staminaRegen == this.staminaRegenTime){
-                this.staminaRegen = 0;
-                this.canSprint = true;
-                this.sprintTime = 0;
+            else {
+                this.body.setVelocityY(0);
             }
-            //console.log('Stamina Regeneration: ', this.staminaRegen,'/',this.staminaRegenTime);
-        }
 
-        // Movement
-        if (this.keys.left.isDown || this.keys.a.isDown && this.x >= 0){
-            this.body.setVelocityX(-this.speed);
-            //console.log('Left key pressed');
-        }
-        else if (this.keys.right.isDown || this.keys.d.isDown && this.x <= this.scene.xLimit)
-        {
-            this.body.setVelocityX(this.speed);
-        }
-        else {
-            this.body.setVelocityX(0);
-        }
+            // Reloading
+            if (this.bullets && this.bullets.bulletsRemaining != this.bullets.ammo && this.keys.r._justUp){
+                this.keys.r._justUp = false;
+                console.log("Reloading...");
+                setTimeout(() => { this.reload(this); }, this.reloadTime);
+            }
 
-        if (this.keys.up.isDown || this.keys.w.isDown && this.y >= 0){
-            this.body.setVelocityY(-this.speed);
         }
-        else if (this.keys.down.isDown || this.keys.s.isDown && this.y <= this.scene.yLimit)
-        {
-            this.body.setVelocityY(this.speed);
-        }
-        else {
-            this.body.setVelocityY(0);
-        }
-
-        // Reloading
-        if (this.bullets && this.bullets.bulletsRemaining != this.bullets.ammo && this.keys.r._justUp){
-            this.keys.r._justUp = false;
-            console.log("Reloading...");
-            setTimeout(() => { this.reload(this); }, this.reloadTime);
-        }
-
 
     }
 }
