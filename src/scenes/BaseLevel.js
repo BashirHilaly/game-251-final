@@ -4,6 +4,7 @@ import playerImage from '../../dist/assets/player.png';
 import floorImage from '../../dist/assets/floor.svg';
 import ColorSystem from "../misc/ColorSystem.js";
 import Enemy from "../gameobjects/Enemy.js";
+import UI from "../misc/UI.js";
 
 
 class BaseLevel extends Phaser.Scene
@@ -11,6 +12,9 @@ class BaseLevel extends Phaser.Scene
 
     player;
     obstacles;
+
+    uiCam;
+    ui;
 
     group;
     enemies;
@@ -47,6 +51,9 @@ class BaseLevel extends Phaser.Scene
 
     create ()
     {
+        // UI Scene
+        this.scene.launch('UIScene');
+
 
         let background = this.add.image(0, 0, 'floor');
         background.x = background.displayWidth / 2;
@@ -55,9 +62,6 @@ class BaseLevel extends Phaser.Scene
         this.yLimit = background.displayHeight; //y positions
 
         this.cameras.main.setBounds(0, 0, this.xLimit, this.yLimit); //the camera can not go beyond the x and y bounds
-
-        // Define key codes
-
         
         function getRandomInt(min, max) {
             min = Math.ceil(min);
@@ -105,7 +109,7 @@ class BaseLevel extends Phaser.Scene
 
     update ()
     {
-        this.cameras.main.centerOn(this.player.x, this.player.y); //centre camera on current position of player
+        this.cameras.main.centerOn(this.player.x, this.player.y); //center camera on current position of player
         this.player.update();
 
         for (let i = 0; i < this.enemies.length; i++)

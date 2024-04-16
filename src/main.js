@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 
 import MainMenu from './scenes/MainMenu';
 import BaseLevel from './scenes/BaseLevel';
+import UI from './misc/UI';
 
 // To run server, "npm start"
 
@@ -23,5 +24,6 @@ const game = new Phaser.Game(config);
 
 game.scene.add('MainMenu', MainMenu);
 game.scene.add('BaseLevel', BaseLevel);
+game.scene.add('UIScene', UI);
 
 game.scene.start('BaseLevel');
