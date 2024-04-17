@@ -48,8 +48,6 @@ class Projectile extends Phaser.Physics.Arcade.Sprite
             }
             //console.log('test');
         });
-
-
     }
 
     destroyBullet ()

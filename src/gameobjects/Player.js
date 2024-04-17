@@ -20,6 +20,7 @@ class Player extends Entity {
 
 
         this.bullets;
+        this.totalBullets = 10;
         this.clips = 10;
         this.clipsRemaining = this.clips;
         this.reloadTime = 1000;
@@ -33,7 +34,9 @@ class Player extends Entity {
 
     createNewClip()
     {
-        this.bullets = new Ammunition(this.scene, 10, 1000, 30);
+        this.bullets = new Ammunition(this.scene, this.totalBullets, 1000, 30);
+        // AMMO UIs
+        this.scene.ui.setAmmoUI(this.bullets.getChildren().length, this.totalBullets, this.clipsRemaining);
     }
     
     reload(_this){
@@ -97,12 +100,12 @@ class Player extends Entity {
         this.scene.input.on('pointerdown', (pointer) => {
             if (this.bullets && this.bullets.bulletsRemaining > 0){
                 this.bullets.fireShot(this.x, this.y, 0);
+
             }
             else {
                 console.log('No ammo');
             }
         });
-
 
     }
     

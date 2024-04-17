@@ -7,6 +7,8 @@ class Ammunition extends Phaser.Physics.Arcade.Group
     {
         super (scene.physics.world, scene);
 
+        this.scene = scene;
+
         this.createMultiple({
             frameQuantity: ammo,
             key: 'shot',
@@ -35,7 +37,9 @@ class Ammunition extends Phaser.Physics.Arcade.Group
             this.shot.fire(x, y, this.speed, maxBounces, this.damage);
             this.bulletsRemaining -= 1;
             console.log(this.bulletsRemaining,'/',this.ammo);
+            this.scene.ui.setAmmoUI(this.bulletsRemaining, this.ammo, this.scene.player.clipsRemaining);
         }
+
 
         // If no more bullets destroy this clip
         if (this.bulletsRemaining <= 0){

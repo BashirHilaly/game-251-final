@@ -28,31 +28,11 @@ class BaseLevel extends Phaser.Scene
         
     }
     
-    createBar(x, y, color){
-
-        // Drawing the bar
-        const bar = this.add.graphics();
-
-        // Add the color
-        bar.fillStyle(color, 1);
-
-        // fill bar with a rectangle
-        bar.fillRect(0, 0, 200, 50);
-
-        // Position the bar
-        bar.x = x;
-        bar.y = y;
-
-        return bar;
-    }
-    setBarValue(bar, value){
-        bar.scaleX = value/100;
-    }
 
     create ()
     {
         // Add a vignette and blur
-        this.cameras.main.postFX.addVignette(0.5, 0.5, 0.8, 0.5);
+        this.cameras.main.postFX.addVignette(0.5, 0.5, 0.8, 0.6);
         this.cameras.main.postFX.addTiltShift(0.3, 1.0, 0.0);
 
         // UI Scene
