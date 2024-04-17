@@ -46,7 +46,6 @@ class Projectile extends Phaser.Physics.Arcade.Sprite
                 bounces += 1;
                 //console.log('Bounces: ', bounces);
             }
-            //console.log('test');
         });
     }
 

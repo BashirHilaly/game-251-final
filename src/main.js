@@ -26,4 +26,4 @@ game.scene.add('MainMenu', MainMenu);
 game.scene.add('BaseLevel', BaseLevel);
 game.scene.add('UIScene', UI);
 
-game.scene.start('BaseLevel');
+game.scene.start('MainMenu');

@@ -15,6 +15,7 @@ class BaseLevel extends Phaser.Scene
 
     uiCam;
     ui;
+    vignette;
 
     group;
     enemies;
@@ -29,10 +30,11 @@ class BaseLevel extends Phaser.Scene
     }
     
 
+
     create ()
     {
         // Add a vignette and blur
-        this.cameras.main.postFX.addVignette(0.5, 0.5, 0.8, 0.6);
+        this.vignette = this.cameras.main.postFX.addVignette(0.5, 0.5, 0.8, 0.6);
         this.cameras.main.postFX.addTiltShift(0.3, 1.0, 0.0);
 
         // UI Scene

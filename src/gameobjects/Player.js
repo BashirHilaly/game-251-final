@@ -48,11 +48,12 @@ class Player extends Entity {
         if (_this.clipsRemaining > 0){
             _this.createNewClip();
         }
+
     }
 
     takeDamage(damage){
         this.health -= damage;
-        console.log('Player Health: ', this.health);
+        // console.log('Player Health: ', this.health);
         this.scene.ui.setBarValue(this.scene.ui.healthBar, this.health);
         if (this.health <= 0){
             this.killPlayer();
@@ -63,7 +64,9 @@ class Player extends Entity {
         console.log('You Died!');
         this.scene.gameOver = true;
         this.scene.physics.pause();
-        this.scene.add.text(this.x, this.y, 'GAME OVER').setOrigin(0.5, 0.5).setFontSize(64);
+        this.scene.ui.gameOver();
+        this.scene.vignette.radius = .1;
+        this.scene.vignette.strength = 0.5;
     }
 
     create(){
