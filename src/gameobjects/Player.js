@@ -15,10 +15,9 @@ class Player extends Entity {
 
         this.isSprinting = false;
         this.canSprint = true;
-        this.stamina = 400;
-        this.sprintTime = 0;
-        this.staminaRegen = 0;
-        this.staminaRegenTime = 600;
+        this.maxStamina = 400;
+        this.stamina = this.maxStamina;
+
 
         this.bullets;
         this.clips = 10;
@@ -26,7 +25,6 @@ class Player extends Entity {
         this.reloadTime = 1000;
 
         this.enemiesKilled = 0;
-
     }
 
     preload(){
@@ -52,6 +50,7 @@ class Player extends Entity {
     takeDamage(damage){
         this.health -= damage;
         console.log('Player Health: ', this.health);
+        this.scene.ui.setBarValue(this.scene.ui.healthBar, this.health);
         if (this.health <= 0){
             this.killPlayer();
         }
@@ -127,34 +126,34 @@ class Player extends Entity {
             this.speed = 200; // Normal speed
             if (this.canSprint)
             {
-                if (this.sprintTime > this.stamina)
+                if (this.stamina <= 0)
                 {
                     this.canSprint = false;
                 }
-                if (!this.keys.shift.isDown || this.sprintTime > this.stamina){
+                if (!this.keys.shift.isDown || this.stamina <= 0){
                     this.isSprinting = false;
                 }
-                else if (this.keys.shift.isDown && this.sprintTime < this.stamina){
+                else if (this.keys.shift.isDown && 0 < this.stamina){
                     this.isSprinting = true;
                 }
         
                 if (this.isSprinting && this.canSprint)
                 {
                     this.speed = this.speed + this.speed/1.5;
-                    this.sprintTime += 1;
-                    //console.log('Sprint Time: ', this.sprintTime);
+                    this.stamina -= 1;
+                    this.scene.ui.setBarValue(this.scene.ui.staminaBar, (this.stamina/this.maxStamina)*100);
+                    console.log('Stamina: ', (this.stamina/this.maxStamina)*100);
                 }
             }
             else {
                 this.speed = 200;
                 // Regenerate stamina
-                this.staminaRegen += 1;
-                if (this.staminaRegen == this.staminaRegenTime){
-                    this.staminaRegen = 0;
+                this.stamina += 1;
+                this.scene.ui.setBarValue(this.scene.ui.staminaBar, (this.stamina/this.maxStamina)*100);
+                if (this.stamina == this.maxStamina){
                     this.canSprint = true;
-                    this.sprintTime = 0;
                 }
-                //console.log('Stamina Regeneration: ', this.staminaRegen,'/',this.staminaRegenTime);
+                console.log('Stamina: ', (this.stamina/this.maxStamina)*100);
             }
 
             // Movement

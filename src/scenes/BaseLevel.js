@@ -51,11 +51,13 @@ class BaseLevel extends Phaser.Scene
 
     create ()
     {
-        // Add a vignette
-        this.cameras.main.postFX.addVignette(0.5, 0.5, 0.8);
+        // Add a vignette and blur
+        this.cameras.main.postFX.addVignette(0.5, 0.5, 0.8, 0.5);
+        this.cameras.main.postFX.addTiltShift(0.3, 1.0, 0.0);
 
         // UI Scene
         this.scene.launch('UIScene');
+        this.ui = this.scene.get('UIScene');
 
 
         let background = this.add.image(0, 0, 'floor');
@@ -64,7 +66,7 @@ class BaseLevel extends Phaser.Scene
         this.xLimit = background.displayWidth; //the player cannot go beyond these x and
         this.yLimit = background.displayHeight; //y positions
 
-        this.cameras.main.setBounds(0, 0, this.xLimit, this.yLimit); //the camera can not go beyond the x and y bounds
+        // this.cameras.main.setBounds(0, 0, this.xLimit, this.yLimit); //the camera can not go beyond the x and y bounds
         
         function getRandomInt(min, max) {
             min = Math.ceil(min);
