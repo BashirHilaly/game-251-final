@@ -7,8 +7,6 @@
 # GAME 251 Final Project
 
 ### TO DO:
-Create UI
-
 Add game timer
 
 Add Images for enemies, bullets, etc
