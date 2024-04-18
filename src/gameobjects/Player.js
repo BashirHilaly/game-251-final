@@ -48,7 +48,7 @@ class Player extends Entity {
         if (_this.clipsRemaining > 0){
             _this.createNewClip();
         }
-
+        _this.scene.ui.reloadingText.visible = false;
     }
 
     takeDamage(damage){
@@ -189,7 +189,7 @@ class Player extends Entity {
             // Reloading
             if (this.bullets && this.bullets.bulletsRemaining != this.bullets.ammo && this.keys.r._justUp){
                 this.keys.r._justUp = false;
-                console.log("Reloading...");
+                this.scene.ui.reloadingText.visible = true;
                 setTimeout(() => { this.reload(this); }, this.reloadTime);
             }
 
