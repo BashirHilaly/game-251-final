@@ -21,6 +21,7 @@ class Enemy extends Entity {
             max = Math.floor(max);
             return Math.floor(Math.random() * (max - min + 1)) + min;
         };
+        
 
         this.x = getRandomInt(0, this.scene.xLimit);
         this.y = getRandomInt(0, this.scene.yLimit);
@@ -44,6 +45,7 @@ class Enemy extends Entity {
     destroyEnemy() {
         this.scene.player.enemiesKilled += 1;
         console.log('Enemy killed: ', this.scene.player.enemiesKilled, ' out of ', this.scene.amountOfEnemies);
+        this.scene.ui.enemyUI.setText(`${this.scene.player.enemiesKilled} Killed Enemies`);
         this.destroy();
     }
 
