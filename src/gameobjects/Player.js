@@ -9,6 +9,8 @@ class Player extends Entity {
         this.scene = scene;
         this.image = image;
 
+        this.isDead = false;
+
         this.health = 100;
 
         this.speed = 200;
@@ -62,6 +64,7 @@ class Player extends Entity {
 
     killPlayer(){
         console.log('You Died!');
+        this.isDead = true;
         this.scene.gameOver = true;
         this.scene.physics.pause();
         this.scene.ui.gameOver();

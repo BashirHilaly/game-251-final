@@ -13,6 +13,9 @@ class BaseLevel extends Phaser.Scene
     player;
     obstacles;
 
+    timer;
+    timeLimit = 30000;
+
     uiCam;
     ui;
     vignette;
@@ -29,7 +32,17 @@ class BaseLevel extends Phaser.Scene
         
     }
     
-
+    endRound ()
+    {
+        if (!this.player.isDead){
+            console.log('Round over');
+            this.gameOver = true;
+            this.physics.pause();
+            this.ui.roundEnd();
+            this.vignette.radius = .1;
+            this.vignette.strength = 0.5;
+        }
+    }
 
     create ()
     {
@@ -37,10 +50,11 @@ class BaseLevel extends Phaser.Scene
         this.vignette = this.cameras.main.postFX.addVignette(0.5, 0.5, 0.8, 0.6);
         this.cameras.main.postFX.addTiltShift(0.3, 1.0, 0.0);
 
+        this.timer = this.time.delayedCall(this.timeLimit, this.endRound, [], this);
+
         // UI Scene
         this.scene.launch('UIScene');
         this.ui = this.scene.get('UIScene');
-
 
         let background = this.add.image(0, 0, 'floor');
         background.x = background.displayWidth / 2;
@@ -98,6 +112,11 @@ class BaseLevel extends Phaser.Scene
     {
         this.cameras.main.centerOn(this.player.x, this.player.y); //center camera on current position of player
         this.player.update();
+
+        // Update timer text
+        if (!this.player.isDead){
+            this.ui.timerText.setText(`Time: ${this.timer.getProgress().toString().substr(0, 4)} / 1`);
+        }
 
         for (let i = 0; i < this.enemies.length; i++)
         {
