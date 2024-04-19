@@ -4,7 +4,6 @@ import playerImage from '../../dist/assets/player.png';
 import floorImage from '../../dist/assets/floor.svg';
 import ColorSystem from "../misc/ColorSystem.js";
 import Enemy from "../gameobjects/Enemy.js";
-import UI from "../misc/UI.js";
 
 
 class BaseLevel extends Phaser.Scene
@@ -12,7 +11,7 @@ class BaseLevel extends Phaser.Scene
 
     player;
     obstacles;
-
+    amountOfObstacles = 40;
 
     uiCam;
     ui;
@@ -25,6 +24,8 @@ class BaseLevel extends Phaser.Scene
 
     timer;
     timeLimit = 3000 * this.amountOfEnemies;
+
+    // nextLevelKey = 'Key';
 
     preload ()
     {
@@ -76,8 +77,7 @@ class BaseLevel extends Phaser.Scene
 
         // Generate obstacles
         const generatedSquares = [];
-        const amountOfObstacles = 40;
-        for (let i = 0; i < amountOfObstacles; i++)
+        for (let i = 0; i < this.amountOfObstacles; i++)
         {
             generatedSquares.push(this.add.rectangle(getRandomInt(0, this.xLimit), getRandomInt(0, this.yLimit), getRandomInt(30, 200), getRandomInt(10, 200), colors.darkGray));
         }

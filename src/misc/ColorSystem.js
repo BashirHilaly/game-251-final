@@ -6,6 +6,8 @@ class ColorSystem{
     gray = 7895160;
     offWhite = 7895160;
     white = 16777215;
+    lightBrown = 10380321;
+    
 
 
     hexToDecimal(hexString){
