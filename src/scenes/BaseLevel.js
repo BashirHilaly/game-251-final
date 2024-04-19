@@ -13,8 +13,6 @@ class BaseLevel extends Phaser.Scene
     player;
     obstacles;
 
-    timer;
-    timeLimit = 30000;
 
     uiCam;
     ui;
@@ -24,6 +22,9 @@ class BaseLevel extends Phaser.Scene
     enemies;
     amountOfEnemies = 10;
     gameOver = false;
+
+    timer;
+    timeLimit = 3000 * this.amountOfEnemies;
 
     preload ()
     {
@@ -38,7 +39,7 @@ class BaseLevel extends Phaser.Scene
             console.log('Round over');
             this.gameOver = true;
             this.physics.pause();
-            this.ui.roundEnd();
+            this.ui.roundEnd(this.amountOfEnemies-this.enemies.length, this.amountOfEnemies);
             this.vignette.radius = .1;
             this.vignette.strength = 0.5;
         }
