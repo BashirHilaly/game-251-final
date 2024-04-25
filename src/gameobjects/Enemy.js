@@ -61,10 +61,14 @@ class Enemy extends Entity {
 
         this.body.setVelocity(this.speed * (changeInX/hypotenuse), this.speed * (changeInY/hypotenuse));
 
+        this.angle = Math.atan2(changeInY,changeInX) * (180/Math.PI) - 90;
+        
+
         if (this.health <= 0)
         {
             this.destroyEnemy();
         }
+
 
     }
 }

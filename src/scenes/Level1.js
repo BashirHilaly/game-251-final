@@ -4,7 +4,8 @@ import ColorSystem from "../misc/ColorSystem.js";
 import Enemy from "../gameobjects/Enemy.js";
 import playerImage from '../../dist/assets/player.png';
 import floorImage from '../../dist/assets/ApartmentFloor.jpg';
-import woodTextures from '../../dist/assets/WoodTextures.jpg'
+import woodTextures from '../../dist/assets/WoodTextures.jpg';
+import enemy1img from '../../dist/assets/pests/lvl1_pest2.png';
 
 
 class Level1 extends Phaser.Scene
@@ -34,6 +35,8 @@ class Level1 extends Phaser.Scene
         this.load.image('player', playerImage);
         this.load.image('floor', floorImage);
         this.load.image('woodTextures', woodTextures);
+
+        this.load.image('enemy1img', enemy1img);
     }
     
     endRound ()
@@ -101,7 +104,7 @@ class Level1 extends Phaser.Scene
         this.group = this.add.group();
         this.group.createMultiple({
             frameQuantity: this.amountOfEnemies,
-            key: 'enemy',
+            key: 'enemy1img',
             active: true,
             visible: true,
             classType: Enemy
@@ -119,7 +122,10 @@ class Level1 extends Phaser.Scene
             // Configuration
             this.enemies[i].speed = 100;
             this.enemies[i].damage = 10;
+
+            this.enemies[i].setScale(.2,.2);
         }
+
 
     }
 
