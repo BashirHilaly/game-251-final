@@ -1,9 +1,9 @@
 import Phaser from "phaser";
 import Player from "../gameobjects/Player.js";
-import playerImage from '../../dist/assets/player.png';
-import floorImage from '../../dist/assets/floor.svg';
 import ColorSystem from "../misc/ColorSystem.js";
 import Enemy from "../gameobjects/Enemy.js";
+import playerImage from '../../dist/assets/player.png';
+import floorImage from '../../dist/assets/floor.svg';
 
 
 class BaseLevel extends Phaser.Scene
