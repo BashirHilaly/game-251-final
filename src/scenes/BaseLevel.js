@@ -20,6 +20,8 @@ class BaseLevel extends Phaser.Scene
     group;
     enemies;
     amountOfEnemies = 10;
+    enemySpeed = 100;
+    enemyDamage = 10;
     gameOver = false;
 
     timer;
@@ -103,8 +105,8 @@ class BaseLevel extends Phaser.Scene
         {
             this.enemies[i].create();
             // Configuration
-            this.enemies[i].speed = 100;
-            this.enemies[i].damage = 10;
+            this.enemies[i].speed = this.enemySpeed;
+            this.enemies[i].damage = this.enemyDamage;
         }
 
     }

@@ -13,7 +13,7 @@ export default class MainMenu extends Phaser.Scene
         this.scene.stop('UIScene');
 
         function changeSceneToBaseLevel(){
-            this.scene.switch('BaseLevel');
+            this.scene.switch('Level1');
         }
 
         const button = this.add.text(1280/2, 720/2, 'Start Game', {

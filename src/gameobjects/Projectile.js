@@ -14,6 +14,8 @@ class Projectile extends Phaser.Physics.Arcade.Sprite
     {
         this.body.reset(x, y);
 
+        this.setScale(.75, .75);
+
         this.setActive(true);
         this.setVisible(true);
 

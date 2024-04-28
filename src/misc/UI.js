@@ -44,14 +44,14 @@ class UI extends Phaser.Scene{
     }
 
     setAmmoUI(rounds, totalRounds, clips){
-        if (this.roundsText != null && this.clipsText != null){
+        if (this.roundsText != null && this.clipsText != null && this.totalRounds != null){
             this.roundsText.text = `${rounds} / ${totalRounds}`;
             this.clipsText.text = `${clips}`;
         }
         else{
             this.roundsText = this.add.text(1280-20, 720-40, `0 / 0`, { fontSize: '30px' ,align: 'right' }).setOrigin(1, 1);
             this.clipsText = this.add.text(1280-20, 720-10, `0`, { fontSize: '24px' ,align: 'right' }).setOrigin(1, 1);
-            this.setAmmoUI(rounds, totalRounds, clips);
+            // this.setAmmoUI(rounds, totalRounds, clips);
         }
     }
 
@@ -78,7 +78,7 @@ class UI extends Phaser.Scene{
         button.on('pointerdown', changeToMainMenu, this);
     }
 
-    roundEnd(enemiesKilled, totalEnemies, nextLevelKey) {
+    roundEnd(enemiesKilled, totalEnemies, nextLevelKey, thisLevelKey) {
 
         // Hide everything
         this.healthBar.visible = false;
@@ -99,6 +99,26 @@ class UI extends Phaser.Scene{
 
         this.add.text(1280/2, 720/4, `Grade: ${enemiesKilled}/${totalEnemies}`).setOrigin(0.5, 0.5).setFontSize(62);
 
+        const button = this.add.text(1280/2, 720/1.4, 'Next Level', {
+            fontFamily: 'Arial',
+            fontSize: '32px',
+            color: '#ffffff',
+            align: 'center',
+            fixedWidth: 260,
+            backgroundColor: '#2d2d2d'
+        }).setPadding(32).setOrigin(0.5);
+
+        button.setInteractive({ useHandCursor: true });
+
+        function nextLevel()
+        {
+            // this.scene.stop('UIScene');
+            this.scene.stop(thisLevelKey);
+            this.scene.stop('UIScene');
+            this.scene.start(nextLevelKey);
+        }
+
+        button.on('pointerdown', nextLevel, this);
 
     }
 

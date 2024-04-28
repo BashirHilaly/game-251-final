@@ -22,7 +22,6 @@ class Enemy extends Entity {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         };
         
-
         this.x = getRandomInt(0, this.scene.xLimit);
         this.y = getRandomInt(0, this.scene.yLimit);
 
@@ -38,8 +37,6 @@ class Enemy extends Entity {
 
         // Collide with other enemies
         this.scene.physics.add.collider(this, this.scene.group);
-
-
     }
 
     destroyEnemy() {

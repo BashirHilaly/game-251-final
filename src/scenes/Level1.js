@@ -3,9 +3,9 @@ import Player from "../gameobjects/Player.js";
 import ColorSystem from "../misc/ColorSystem.js";
 import Enemy from "../gameobjects/Enemy.js";
 import playerImage from '../../dist/assets/player.png';
-import floorImage from '../../dist/assets/ApartmentFloor.jpg';
+import ApartmentFloor from '../../dist/assets/ApartmentFloor.jpg';
 import woodTextures from '../../dist/assets/WoodTextures.jpg';
-import enemy1img from '../../dist/assets/pests/lvl1_pest2.png';
+import enemy1img from '../../dist/assets/pests/lvl1_pest1.png';
 
 
 class Level1 extends Phaser.Scene
@@ -23,17 +23,19 @@ class Level1 extends Phaser.Scene
     group;
     enemies;
     amountOfEnemies = 10;
+    enemySpeed = 100;
+    enemyDamage = 10;
     gameOver = false;
 
     timer;
     timeLimit = 3000 * this.amountOfEnemies;
 
-    // nextLevelKey = 'Key';
+    nextLevelKey = 'Level2';
 
     preload ()
     {
         this.load.image('player', playerImage);
-        this.load.image('floor', floorImage);
+        this.load.image('ApartmentFloor', ApartmentFloor);
         this.load.image('woodTextures', woodTextures);
 
         this.load.image('enemy1img', enemy1img);
@@ -45,7 +47,7 @@ class Level1 extends Phaser.Scene
             console.log('Round over');
             this.gameOver = true;
             this.physics.pause();
-            this.ui.roundEnd(this.amountOfEnemies-this.enemies.length, this.amountOfEnemies);
+            this.ui.roundEnd(this.amountOfEnemies-this.enemies.length, this.amountOfEnemies, this.nextLevelKey, 'Level1');
             this.vignette.radius = .1;
             this.vignette.strength = 0.5;
         }
@@ -63,7 +65,7 @@ class Level1 extends Phaser.Scene
         this.scene.launch('UIScene');
         this.ui = this.scene.get('UIScene');
 
-        let background = this.add.image(0, 0, 'floor');
+        let background = this.add.image(0, 0, 'ApartmentFloor');
         background.x = background.displayWidth / 2;
         background.y = background.displayHeight / 2;
         this.xLimit = background.displayWidth; //the player cannot go beyond these x and
@@ -120,10 +122,10 @@ class Level1 extends Phaser.Scene
         {
             this.enemies[i].create();
             // Configuration
-            this.enemies[i].speed = 100;
-            this.enemies[i].damage = 10;
+            this.enemies[i].speed = this.enemySpeed;
+            this.enemies[i].damage = this.enemyDamage;
 
-            this.enemies[i].setScale(.2,.2);
+            this.enemies[i].setScale(.3,.3);
         }
 
 
@@ -143,7 +145,6 @@ class Level1 extends Phaser.Scene
         {
             this.enemies[i].update();
         }
-
     }
 }
 
