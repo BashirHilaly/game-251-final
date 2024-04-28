@@ -1,6 +1,6 @@
 # GAME 251 Final Project
 
-# Introduction
+## Introduction
 This is a top down shooter game submitted for my Game251 Final taught by Professor Asim Khaliq. 
 
 ## Concept
